@@ -1,0 +1,74 @@
+<template>
+  <div class="discover">
+    <el-carousel :interval="4000" type="card" class="carousel">
+      <el-carousel-item v-for="(item, index) in banners" :key="index">
+        <img :src="item.imageUrl" alt="" srcset="" />
+      </el-carousel-item>
+    </el-carousel>
+    <div class="item" v-for="(item, index) in list" :key="index">
+      <div class="imgitem">
+        <img :src="item.picUrl" @click="searchList(item.id)" />
+        <p>
+          {{ item.name }}
+        </p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+export default {
+  data() {
+    return {
+      banners: [],
+      list: [],
+    };
+  },
+  created() {
+    axios({
+      url: "https://autumnfish.cn/banner",
+      method: "get",
+      params: {},
+    }).then((res) => {
+      console.log("轮播图");
+      console.log(res);
+      this.banners = res.data.banners;
+    }),
+      axios({
+        url: "https://autumnfish.cn/personalized",
+        method: "get",
+        params: { limit: 10 },
+      }).then((res) => {
+        console.log("推荐歌单");
+        console.log(res);
+        this.list = res.data.result;
+      });
+  },
+  methods: {
+    searchList(id) {
+      this.$router.push(`/playlist?qlist=${id}`);
+    },
+  },
+};
+</script>
+
+<style>
+.discover .carousel {
+  width: 100%;
+}
+.imgitem {
+  width: 16%;
+  height: 200px;
+  float: left;
+  margin: 0 20px 25px 20px;
+}
+.imgitem img {
+  height: 100%;
+  cursor: pointer;
+}
+.imgitem p {
+  margin: 0;
+  text-align: center;
+}
+</style>
