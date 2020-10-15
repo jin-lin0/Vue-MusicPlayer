@@ -5,12 +5,14 @@
         <img :src="item.imageUrl" alt="" srcset="" />
       </el-carousel-item>
     </el-carousel>
-    <div class="item" v-for="(item, index) in list" :key="index">
-      <div class="imgitem">
-        <img :src="item.picUrl" @click="searchList(item.id)" />
-        <p>
-          {{ item.name }}
-        </p>
+    <div class="item">
+      <div v-for="(item, index) in list" :key="index">
+        <div class="imgitem">
+          <img :src="item.picUrl" @click="searchList(item.id)" />
+          <p>
+            {{ item.name }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -21,9 +23,14 @@ import axios from "axios";
 export default {
   data() {
     return {
+      visHeight: "",
       banners: [],
       list: [],
     };
+  },
+  mounted() {
+    this.initHeight();
+    console.log(this.visHeight);
   },
   created() {
     axios({
@@ -49,19 +56,35 @@ export default {
     searchList(id) {
       this.$router.push(`/playlist?qlist=${id}`);
     },
+    initHeight() {
+      this.visHeight = document.documentElement.clientHeight;
+      window.onresize = () => {
+        this.visHeight = document.documentElement.clientHeight;
+      };
+    },
   },
 };
 </script>
 
 <style>
+.discover {
+  display: flex;
+  flex-wrap: wrap;
+}
 .discover .carousel {
   width: 100%;
 }
+.item {
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+  align-content: flex-start;
+}
 .imgitem {
-  width: 16%;
+  width: 18%;
   height: 200px;
   float: left;
-  margin: 0 20px 25px 20px;
+  margin: 0 1% 2% 1%;
 }
 .imgitem img {
   height: 100%;

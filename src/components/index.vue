@@ -42,7 +42,7 @@ body {
   background-color: rgba(224, 201, 201, 0.3);
 }
 .index .nav {
-  width: 200px;
+  width: 20%;
   background-color: rgba(224, 201, 201, 0.3);
 }
 .index .nav ul {
