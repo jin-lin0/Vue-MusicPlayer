@@ -13,8 +13,24 @@
       </div>
     </div>
     <div class="content">
+      <div class="bar">
+        <div
+          class="bar-item"
+          :class="{ active: bar == baritem }"
+          v-for="(baritem, index) in barlist"
+          :key="index"
+          @click="bar = baritem"
+        >
+          {{ baritem }}
+        </div>
+      </div>
       <div class="items">
-        <div class="item" v-for="(item, index) in list" :key="index">
+        <div
+          class="item"
+          v-for="(item, index) in list"
+          :key="index"
+          @click="searchList(item.id)"
+        >
           <div class="item-count white">
             播放量：{{ item.playCount }}
             <br />
@@ -34,9 +50,51 @@ export default {
   data() {
     return {
       page: 1,
+      bar: "全部",
+      barlist: [
+        "全部",
+        "欧美",
+        "华语",
+        "流行",
+        "说唱",
+        "摇滚",
+        "民谣",
+        "电子",
+        "轻音乐",
+        "影视原声",
+        "怀旧",
+        "治愈",
+        "旅行",
+      ],
       topList: {},
       list: {},
     };
+  },
+  watch: {
+    bar() {
+      console.log(this.bar);
+      axios({
+        url: "https://autumnfish.cn/top/playlist",
+        method: "get",
+        params: {
+          limit: 1,
+          cat: this.bar,
+        },
+      }).then((res) => {
+        this.topList = res.data.playlists[0];
+      });
+      axios({
+        url: "https://autumnfish.cn/top/playlist",
+        method: "get",
+        params: {
+          limit: 10,
+          cat: this.bar,
+        },
+      }).then((res) => {
+        console.log(res);
+        this.list = res.data.playlists;
+      });
+    },
   },
   created() {
     axios({
@@ -58,6 +116,11 @@ export default {
       console.log(res);
       this.list = res.data.playlists;
     });
+  },
+  methods: {
+    searchList(id) {
+      this.$router.push(`/playlist?qlist=${id}`);
+    },
   },
 };
 </script>
@@ -113,7 +176,7 @@ export default {
   height: 30px;
 }
 .content {
-  padding-top: 20px;
+  padding-top: 10px;
 }
 .content .items {
   display: flex;
@@ -147,5 +210,24 @@ export default {
 }
 .items .item:hover .item-count {
   z-index: 2;
+}
+.content .bar {
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+.content .bar .bar-item {
+  padding: 5px;
+  font-size: 15px;
+  color: gray;
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin-right: 20px;
+  flex-wrap: wrap;
+  cursor: pointer;
+}
+.content .bar .bar-item.active,
+.content .bar .bar-item:hover {
+  color: brown;
 }
 </style>
