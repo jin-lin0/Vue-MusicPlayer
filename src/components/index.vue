@@ -6,7 +6,7 @@
           <router-link to="/discover">今日音乐</router-link>
         </li>
         <li>
-          <router-link to="/recommend">推荐音乐</router-link>
+          <router-link to="/recommend">精选歌单</router-link>
         </li>
       </ul>
     </div>
@@ -39,11 +39,12 @@ body {
 .index {
   display: flex;
   height: 100%;
-  background-color: rgba(224, 201, 201, 0.3);
+  background-color: rgb(232, 214, 214);
 }
 .index .nav {
   width: 20%;
-  background-color: rgba(224, 201, 201, 0.3);
+  height: 100%;
+  background-color: rgb(232, 214, 214);
 }
 .index .nav ul {
   padding: 0px;
