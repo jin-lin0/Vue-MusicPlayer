@@ -89,6 +89,7 @@ export default {
 .imgitem img {
   height: 100%;
   cursor: pointer;
+  border-radius: 20px;
 }
 .imgitem p {
   margin: 0;

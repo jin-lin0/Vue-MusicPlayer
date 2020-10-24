@@ -14,7 +14,7 @@
       <router-view></router-view>
     </div>
     <div class="player">
-      <audio :src="Url" controls autoplay loop></audio>
+      <audio :src="Url" ref="audio" controls autoplay></audio>
     </div>
   </div>
 </template>
@@ -24,8 +24,10 @@ export default {
   data() {
     return {
       Url: "",
+      listloopflag: false,
     };
   },
+  methods: {},
 };
 </script>
 

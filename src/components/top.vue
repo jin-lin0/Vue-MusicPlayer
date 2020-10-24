@@ -1,6 +1,12 @@
 <template>
   <div class="top">
-    <el-input placeholder="搜索歌曲" v-model="inputValue" clearable> </el-input>
+    <el-input
+      placeholder="搜索歌曲"
+      @keyup.enter.native="search"
+      v-model="inputValue"
+      clearable
+    >
+    </el-input>
 
     <el-button type="primary" @click="search" icon="el-icon-search"
       >搜索</el-button

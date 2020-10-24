@@ -10,6 +10,9 @@
         <td>
           {{ item.album.name }}
         </td>
+        <td>
+          {{ item.dt }}
+        </td>
       </tr>
     </table>
   </div>
@@ -46,6 +49,13 @@ export default {
       }).then((res) => {
         console.log(res);
         this.songs = res.data.result.songs;
+        for (let i = 0; i < this.songs.length; i++) {
+          let min = parseInt(this.songs[i].duration / 1000 / 60);
+          let sec = parseInt((this.songs[i].duration / 1000) % 60);
+          if (min < 10) min = "0" + min;
+          if (sec < 10) sec = "0" + sec;
+          this.songs[i].dt = min + ":" + sec;
+        }
       });
     },
     play(id) {
