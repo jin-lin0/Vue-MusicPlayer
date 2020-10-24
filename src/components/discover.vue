@@ -19,6 +19,7 @@
 </template>
 
 <script>
+const API_PROXY = "https://bird.ioliu.cn/v1/?url=";
 import axios from "axios";
 export default {
   data() {
@@ -34,7 +35,7 @@ export default {
   },
   created() {
     axios({
-      url: "https://autumnfish.cn/banner",
+      url: API_PROXY + "https://autumnfish.cn/banner",
       method: "get",
       params: {},
     }).then((res) => {
@@ -43,7 +44,7 @@ export default {
       this.banners = res.data.banners;
     }),
       axios({
-        url: "https://autumnfish.cn/personalized",
+        url: API_PROXY + "https://autumnfish.cn/personalized",
         method: "get",
         params: { limit: 10 },
       }).then((res) => {

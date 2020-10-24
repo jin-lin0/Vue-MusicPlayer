@@ -45,6 +45,7 @@
 </template>
 
 <script>
+const API_PROXY = "https://bird.ioliu.cn/v1/?url=";
 import axios from "axios";
 export default {
   data() {
@@ -74,7 +75,7 @@ export default {
     bar() {
       console.log(this.bar);
       axios({
-        url: "https://autumnfish.cn/top/playlist",
+        url: API_PROXY + "https://autumnfish.cn/top/playlist",
         method: "get",
         params: {
           limit: 1,
@@ -84,7 +85,7 @@ export default {
         this.topList = res.data.playlists[0];
       });
       axios({
-        url: "https://autumnfish.cn/top/playlist",
+        url: API_PROXY + "https://autumnfish.cn/top/playlist",
         method: "get",
         params: {
           limit: 10,
@@ -98,7 +99,7 @@ export default {
   },
   created() {
     axios({
-      url: "https://autumnfish.cn/top/playlist",
+      url: API_PROXY + "https://autumnfish.cn/top/playlist",
       method: "get",
       params: {
         limit: 1,
@@ -107,7 +108,7 @@ export default {
       this.topList = res.data.playlists[0];
     });
     axios({
-      url: "https://autumnfish.cn/top/playlist",
+      url: API_PROXY + "https://autumnfish.cn/top/playlist",
       method: "get",
       params: {
         limit: 10,

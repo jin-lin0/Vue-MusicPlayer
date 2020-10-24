@@ -42,6 +42,7 @@
 </template>
 
 <script>
+const API_PROXY = "https://bird.ioliu.cn/v1/?url=";
 import axios from "axios";
 export default {
   data() {
@@ -58,7 +59,7 @@ export default {
   methods: {
     searchList() {
       axios({
-        url: "https://autumnfish.cn/playlist/detail",
+        url: API_PROXY + "https://autumnfish.cn/playlist/detail",
         method: "get",
         params: {
           id: this.$route.query.qlist,
@@ -81,7 +82,7 @@ export default {
       this.listnumber = index;
       console.log(this.listnumber);
       axios({
-        url: "https://autumnfish.cn/song/url",
+        url: API_PROXY + "https://autumnfish.cn/song/url",
         method: "get",
         params: {
           id,
