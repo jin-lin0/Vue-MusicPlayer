@@ -80,7 +80,7 @@ export default {
     },
     play(id, index) {
       this.listnumber = index;
-      console.log(this.listnumber);
+      console.log(this.listnumber + 1);
       axios({
         url: API_PROXY + "https://autumnfish.cn/song/url",
         method: "get",
@@ -89,14 +89,26 @@ export default {
         },
       }).then((res) => {
         let url = res.data.data[0].url;
-        this.$parent.Url = url;
+        if (url == null) {
+          this.$message({
+            message: "未找到该歌曲，换一个吧！",
+            type: "warning",
+          });
+          if (this.$parent.listloopflag == true) {
+            this.listnumber++;
+            this.play(this.songstrack[this.listnumber].id, this.listnumber);
+          }
+        } else {
+          this.$parent.Url = url;
+          console.log(res);
+        }
       });
     },
     listPlay() {
       this.$parent.listloopflag = !this.$parent.listloopflag;
       this.$parent.$refs.audio.onended = () => {
         if (this.$parent.listloopflag) {
-          console.log("列表循环下一首");
+          console.log("列表循环");
           this.listnumber++;
           if (this.listnumber == this.songstrack.length) this.listnumber = 0;
           this.play(this.songstrack[this.listnumber].id, this.listnumber);
