@@ -2,7 +2,7 @@
   <div class="playlist">
     <div class="title">
       <div class="playall">
-        <el-button type="warning" round @click="listPlay">
+        <el-button type="warning" round @click="clickListPlay">
           <span v-if="this.$parent.listloopflag">正在循环</span>
           <span v-else>列表循环</span>
         </el-button>
@@ -19,7 +19,7 @@
       <tr
         v-for="(item, index) in songs.tracks"
         :key="index"
-        @click="play(item.id, index)"
+        @click="clickPlay(item.id, index)"
       >
         <td>
           {{ index + 1 }}
@@ -57,6 +57,9 @@ export default {
     this.searchList();
   },
   methods: {
+    /* 
+      获取歌单列表
+    */
     searchList() {
       axios({
         url: API_PROXY + "https://autumnfish.cn/playlist/detail",
@@ -66,9 +69,9 @@ export default {
         },
       }).then((res) => {
         console.log("歌单列表");
-        console.log(res);
         this.songs = res.data.playlist;
         this.songstrack = this.songs.tracks;
+        console.log(this.songstrack);
         for (let i = 0; i < this.songstrack.length; i++) {
           let min = parseInt(this.songstrack[i].dt / 1000 / 60);
           let sec = parseInt((this.songstrack[i].dt / 1000) % 60);
@@ -78,6 +81,16 @@ export default {
         }
       });
     },
+    /* 
+      更新歌单列表数组，播放选中歌曲
+     */
+    clickPlay(id, index) {
+      this.listPlayMethod();
+      this.play(id, index);
+    },
+    /* 
+      播放歌曲    
+    */
     play(id, index) {
       this.listnumber = index;
       console.log(this.listnumber + 1);
@@ -104,8 +117,14 @@ export default {
         }
       });
     },
-    listPlay() {
+    /* 
+      改变循环播放标志，添加循环播放事件
+    */
+    clickListPlay() {
       this.$parent.listloopflag = !this.$parent.listloopflag;
+      this.listPlayMethod();
+    },
+    listPlayMethod() {
       this.$parent.$refs.audio.onended = () => {
         if (this.$parent.listloopflag) {
           console.log("列表循环");
