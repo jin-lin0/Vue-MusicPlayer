@@ -1,9 +1,21 @@
 <template>
   <div class="result">
-    <h2 class="title">{{ $route.query.q }}</h2>
+    <h2 class="title">
+      {{ $route.query.q }}
+      <div class="playall">
+        <el-button type="warning" round @click="clickListPlay">
+          <span v-if="this.$parent.listloopflag">正在循环</span>
+          <span v-else>列表循环</span>
+        </el-button>
+      </div>
+    </h2>
 
     <table width="100%" border="0">
-      <tr v-for="(item, index) in songs" :key="index" @click="play(item.id)">
+      <tr
+        v-for="(item, index) in songs"
+        :key="index"
+        @click="clickPlay(item.id, index)"
+      >
         <td>{{ index + 1 }}</td>
         <td>{{ item.name }}</td>
         <td>{{ item.artists[0].name }}</td>
@@ -26,6 +38,7 @@ export default {
     return {
       songs: [],
       qid: "",
+      listnumber: 0,
     };
   },
   created() {
@@ -59,7 +72,13 @@ export default {
         }
       });
     },
-    play(id) {
+    clickPlay(id, index) {
+      this.listPlayMethod();
+      this.play(id, index);
+    },
+    play(id, index) {
+      this.listnumber = index;
+      console.log(this.listnumber + 1);
       axios({
         url: API_PROXY + "https://autumnfish.cn/song/url",
         method: "get",
@@ -71,11 +90,32 @@ export default {
             message: "未找到该歌曲，换一个吧！",
             type: "warning",
           });
+          if (this.$parent.listloopflag == true) {
+            this.listnumber++;
+            if (this.listnumber >= this.songs.length) this.listnumber = 0;
+            this.play(this.songs[this.listnumber].id, this.listnumber);
+          }
         } else {
-          console.log(res);
           this.$parent.Url = url;
+          console.log(res);
         }
       });
+    },
+    clickListPlay() {
+      this.$parent.listloopflag = !this.$parent.listloopflag;
+      this.listPlayMethod();
+    },
+    listPlayMethod() {
+      this.$parent.$refs.audio.onended = () => {
+        if (this.$parent.listloopflag) {
+          console.log("正在列表循环");
+          this.listnumber++;
+          if (this.listnumber >= this.songs.length) this.listnumber = 0;
+          this.play(this.songs[this.listnumber].id, this.listnumber);
+        } else {
+          console.log("停止循环");
+        }
+      };
     },
   },
 };
@@ -84,7 +124,16 @@ export default {
 
 <style>
 .title {
+  position: relative;
   text-align: center;
+}
+.title .playall {
+  position: absolute;
+  top: 50%;
+  left: 4%;
+}
+.title .playall .el-button--warning {
+  background-color: rgba(179, 97, 196, 0.2);
 }
 .result tr {
   cursor: pointer;

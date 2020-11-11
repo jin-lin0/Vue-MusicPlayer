@@ -6,13 +6,11 @@
       </el-carousel-item>
     </el-carousel>
     <div class="item">
-      <div v-for="(item, index) in list" :key="index">
-        <div class="imgitem">
-          <img :src="item.picUrl" @click="searchList(item.id)" />
-          <p>
-            {{ item.name }}
-          </p>
-        </div>
+      <div v-for="(item, index) in list" :key="index" class="imgitem">
+        <img :src="item.picUrl" @click="searchList(item.id)" />
+        <p>
+          {{ item.name }}
+        </p>
       </div>
     </div>
   </div>
@@ -69,26 +67,26 @@ export default {
 
 <style>
 .discover {
-  display: flex;
-  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
 }
 .discover .carousel {
   width: 100%;
 }
 .item {
-  width: 100%;
-  height: 100%;
-  justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
   align-content: flex-start;
 }
 .imgitem {
-  width: 18%;
-  height: 200px;
-  float: left;
-  margin: 0 1% 2% 1%;
+  box-sizing: border-box;
+  width: 200px;
+  height: 240px;
 }
 .imgitem img {
-  height: 100%;
+  height: 81%;
   cursor: pointer;
   border-radius: 20px;
 }

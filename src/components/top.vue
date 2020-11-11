@@ -39,7 +39,8 @@ export default {
 <style>
 .top {
   display: flex;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.3);
+  width: 100%;
+  /* align-items: center; */
+  /* background-color: rgba(255, 255, 255, 0.3); */
 }
 </style>

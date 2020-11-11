@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="head white">
+    <div class="head">
       <img :src="topList.coverImgUrl" alt="" class="bg" />
       <div class="topimg">
         <img :src="topList.coverImgUrl" />
@@ -128,7 +128,7 @@ export default {
 
 <style>
 .white {
-  color: white;
+  color: beige;
 }
 .head {
   background-color: rgba(141, 14, 163, 0.2);
@@ -152,14 +152,16 @@ export default {
   right: 0;
   bottom: 0;
   z-index: 0;
-  filter: blur(20px);
+  filter: blur(25px);
   z-index: 0;
 }
 .head .description {
   color: beige;
-  font-size: 14px;
+  width: 84%;
+  font-size: 16px;
+  text-align: center;
   padding-top: 5px;
-  margin: 5px;
+
   text-overflow: ellipsis;
   overflow: hidden;
   z-index: 1;
@@ -200,7 +202,7 @@ export default {
 .items .item .item-count {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 10px;
   font-size: 14px;
   z-index: 1;
   background: rgba(0, 0, 0, 0.5);

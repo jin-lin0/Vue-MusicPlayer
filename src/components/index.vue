@@ -45,6 +45,7 @@ body {
 }
 .index .nav {
   width: 20%;
+  min-width: 20vw;
   height: 100%;
   background-color: rgb(232, 214, 214);
 }
