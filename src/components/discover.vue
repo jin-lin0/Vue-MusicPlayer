@@ -32,6 +32,7 @@ export default {
     console.log(this.visHeight);
   },
   created() {
+    //获取轮播图
     axios({
       url: API_PROXY + "https://autumnfish.cn/banner",
       method: "get",
